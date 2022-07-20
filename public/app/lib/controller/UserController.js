@@ -40,8 +40,10 @@ app.controller("UserController", function ($scope, UserFactory, RoleFactory) {
                         showmesage(resp.data.message);
                         processData.listUser();
                     })
-                    .catch(function (err) {
-                        console.log(err);
+                    .catch(function (response) {
+                        if (response.status === 401) {
+                            alert(response.data);
+                        }
                     });
             } else {
                 return false;
@@ -65,9 +67,14 @@ app.controller("UserController", function ($scope, UserFactory, RoleFactory) {
                         $("#myModal").modal("toggle");
                     })
                     .catch(function (response) {
-                        $scope.vldName = response.data?.name;
-                        $scope.vldEmail = response.data?.email;
-                        $scope.vldPass = response.data?.password;
+                        console.log(response);
+                        if (response.status === 401) {
+                            alert(response.data);
+                        } else {
+                            $scope.vldName = response.data?.name;
+                            $scope.vldEmail = response.data?.email;
+                            $scope.vldPass = response.data?.password;
+                        }
                     });
             }
             if (typeof id !== "undefined") {
@@ -78,10 +85,13 @@ app.controller("UserController", function ($scope, UserFactory, RoleFactory) {
                         $("#myModal").modal("toggle");
                     })
                     .catch(function (response) {
-                        console.log(response.data.message);
-                        $scope.vldName = response.data.name;
-                        $scope.vldEmail = response.data.email;
-                        $scope.vldPass = response.data.password;
+                        if (response.status === 401) {
+                            alert(response.data);
+                        } else {
+                            $scope.vldName = response.data.name;
+                            $scope.vldEmail = response.data.email;
+                            $scope.vldPass = response.data.password;
+                        }
                     });
             }
         },
@@ -98,8 +108,19 @@ app.controller("UserController", function ($scope, UserFactory, RoleFactory) {
             UserFactory.ShowUser(id).then(function (response) {
                 console.log(response);
                 $scope.user = response.data.user;
-                $scope.optionRole = response.data.user.roles;
                 $scope.role = response.data.user.roles;
+                ids = [];
+                angular.forEach($scope.role, function (item) {
+                    ids.push(item.id);
+                });
+                console.log(ids);
+                angular.forEach($scope.roleOption, function (role) {
+                    if (ids.indexOf(role.id) > -1) {
+                        role.selected = true;
+                    } else {
+                        role.selected = false;
+                    }
+                });
             });
         }
         $("#myModal").modal("show");
@@ -120,7 +141,6 @@ app.controller("UserController", function ($scope, UserFactory, RoleFactory) {
 
                     var allUser = response.data.users.total;
                     var per = response.data.users.per_page;
-                    
 
                     //buttonPage
                     var tmpPages = [];
@@ -130,14 +150,12 @@ app.controller("UserController", function ($scope, UserFactory, RoleFactory) {
                     }
 
                     $scope.pages = tmpPages;
-
                 })
-                .catch(function (err) {
-                });
+                .catch(function (err) {});
         },
         //getrole
         listRole: function () {
-            RoleFactory.GetRole().then(function (response) {
+            UserFactory.ListRole().then(function (response) {
                 $scope.roleOption = response.data.roles;
             });
         },

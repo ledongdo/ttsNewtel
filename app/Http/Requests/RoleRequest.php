@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
-class UserCreateRequest extends FormRequest
+class RoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,7 @@ class UserCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:50',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|max:20',
+            'name' => 'required|max:50|unique:roles',
         ];
     }
 	
@@ -37,11 +35,7 @@ class UserCreateRequest extends FormRequest
         return [
             'name.required' => 'Tên không được để trống',
             'name.max' => 'Tên không được quá dài',
-            'email.required' => 'Email không được để trống',
-            'email.email' => 'Email không đúng định dạng',
-            'email.unique' => 'Email đã tồn tại',
-            'password.required' => 'Password không được để trống',
-            'password.max' => 'Password không được quá dài',
+            'name.unique' => 'Tên không được trùng',
         ];
     }
     protected function failedValidation(Validator $validator)

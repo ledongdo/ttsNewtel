@@ -1,13 +1,17 @@
-app.factory("RoleFactory",['$http',
-function ($http) {
+app.factory("RoleFactory",['$http',"$httpParamSerializer",
+function ($http,$httpParamSerializer) {
 
     var roleFactory = {};
 
-    roleFactory.GetRole = function () { 
-        return $http({
-            method: 'GET',
-            url : siteUrl + "/roles",
-        });
+    roleFactory.GetRole = function (page, perPage, freeText) { 
+        let queryParams = {
+            page: page,
+        };
+        if (freeText) queryParams.freeText = freeText;
+        if (perPage) queryParams.perPage = perPage;
+        
+        let url = siteUrl +  "/roles?" + $httpParamSerializer(queryParams);
+        return $http.get(url);
      };
     roleFactory.ShowRole = function (id) { 
         return $http({

@@ -1,23 +1,8 @@
 ﻿@extends('layouts.admin')
   @section('content')
   <div class="content-wrapper">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Starter Page</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Starter Page</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="content">
-    <div class="container" ng-app="my-app" ng-controller="UserController" >
+    <div class="container" style="padding-top: 30px;" ng-app="my-app" ng-controller="UserController" >
  
  <h2 align='center'>Danh Sách User</h2>
 
@@ -52,7 +37,7 @@
    <div class="col-sm-2">
      <label for="">per page:</label>
      <select ng-model="data.filter.perPage" ng-change="action.filter()">
-         <option ng-repeat="perPage in data.listPerPage" ng-value="perPage">@{{perPage}}</option>
+         <option ng-repeat="perPage in data.listPerPage"  ng-value="perPage">@{{perPage}}</option>
      </select>
    </div>
 
@@ -61,7 +46,6 @@
  <!-- Modal -->
  
  <user-detail></user-detail>
- 
  
 </div>
     </div>

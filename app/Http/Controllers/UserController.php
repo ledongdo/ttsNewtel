@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Role;
 use App\User;
 use Exception;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -102,12 +102,8 @@ class UserController extends Controller
     public function index()
     {
 
-        if (Auth::check()) {
-
             return view('user.index');
-        } else {
-            return redirect()->route('get-login');
-        }
+        
     }
     //User
     public function getUser(Request $request)
@@ -137,6 +133,14 @@ class UserController extends Controller
     public function userDetail()
     {
         return view('user.detail');
+    }
+
+    public function getRole()
+    {
+        $roles = Role::get();
+        return response()->json([
+            'roles' => $roles,
+        ], 200);
     }
 
 }
