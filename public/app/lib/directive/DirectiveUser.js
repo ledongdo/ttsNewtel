@@ -4,4 +4,3 @@ app.directive('userDetail', function() {
       templateUrl: '/users/userDetail',
     };
   });
-  

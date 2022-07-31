@@ -1,7 +1,7 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'v7.30.1',
+        'version' => '7.30.1.0',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -122,12 +122,12 @@
             'dev_requirement' => true,
         ),
         'fideloper/proxy' => array(
-            'pretty_version' => '4.4.2',
-            'version' => '4.4.2.0',
+            'pretty_version' => '4.4.1',
+            'version' => '4.4.1.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../fideloper/proxy',
             'aliases' => array(),
-            'reference' => 'a751f2bc86dd8e6cfef12dc0cbdada82f5a18750',
+            'reference' => 'c073b2bd04d1c90e04dc1b787662b558dd65ade0',
             'dev_requirement' => false,
         ),
         'filp/whoops' => array(
@@ -374,8 +374,8 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'v7.30.1',
+            'version' => '7.30.1.0',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -685,8 +685,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0.0 || 2.0.0 || 3.0.0',
-                1 => '1.0|2.0',
+                0 => '1.0|2.0',
+                1 => '1.0.0 || 2.0.0 || 3.0.0',
             ),
         ),
         'psr/simple-cache' => array(
@@ -699,12 +699,12 @@
             'dev_requirement' => false,
         ),
         'psy/psysh' => array(
-            'pretty_version' => 'v0.11.7',
-            'version' => '0.11.7.0',
+            'pretty_version' => 'v0.11.6',
+            'version' => '0.11.6.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../psy/psysh',
             'aliases' => array(),
-            'reference' => '77fc7270031fbc28f9a7bea31385da5c4855cb7a',
+            'reference' => '3f5b5f8aaa979fbd0d1783173f4c82ad529fe621',
             'dev_requirement' => false,
         ),
         'ralouphie/getallheaders' => array(

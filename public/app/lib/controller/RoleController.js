@@ -1,13 +1,8 @@
+
 app.controller("RoleController", function ($scope, RoleFactory) {
     $scope.data = {
         ListRole: [],
         ListPermis: [],
-        listPerPage: [5, 10, 15],
-        filter: {
-            freeText: "",
-            page: 1,
-            perPage: 5,
-        },
     };
 
     function showmesage(message) {
@@ -31,36 +26,13 @@ app.controller("RoleController", function ($scope, RoleFactory) {
             RoleFactory.ShowRole(id).then(function (response) {
                 console.log(response);
                 $scope.role = response.data.roles;
-                $scope.permission = response.data.roles.permissions;
-                ids = [];
-                angular.forEach($scope.permission, function (item) {
-                    ids.push(item.id);
-                });
-                angular.forEach($scope.permiss, function (permission) {
-                    if (ids.indexOf(permission.id) > -1) {
-                        permission.checked = true;
-                    } else {
-                        permission.checked = false;
-                    }
-                });
             });
         }
-
         $("#myModal").modal("show");
-
-        //event
-        //
     };
 
     //action
     $scope.action = {
-        filter: function () {
-            processData.ListRole();
-        },
-        paginate: function (pageNo) {
-            $scope.data.filter.page = pageNo;
-            processData.ListRole();
-        },
         delete: function (id) {
             var confmDel = confirm("Ban muon xoa khong");
             if (confmDel == true) {
@@ -69,10 +41,8 @@ app.controller("RoleController", function ($scope, RoleFactory) {
                         showmesage(resp.data.message);
                         processData.ListRole();
                     })
-                    .catch(function (response) {
-                        if (response.status === 401) {
-                            alert(response.data);
-                        }
+                    .catch(function (err) {
+                        console.log(err);
                     });
             } else {
                 return false;
@@ -81,31 +51,35 @@ app.controller("RoleController", function ($scope, RoleFactory) {
 
         //Create User
         save: function (id) {
-            var album = $scope.permiss.filter(function (permission) {
-                return permission.checked;
-            });
-            console.log($scope.permiss);
-            $scope.permission = [];
-            angular.forEach(album, function (item) {
-                $scope.permission.push(item.id);
-            });
+            // var modelPer = [];
+            // var alertMsg = '';
+            // angular.forEach($scope.permiss,function(permission){
+            //     if(permission.selected){
+            //         modelPer.push(permission);
+            //         alertMsg += 'id'+ permission.id
+            //     }
+                
+            // });
+            
+               
+            var album = $scope.permiss.filter(function(permission){
+                return permission.selected;
+              });
+            
+            console.log(album)
+             
             RoleModel = $.param({
-                name: $scope.role?.name,
-                permission_id: $scope?.permission,
+                name: $scope.role.name,
+                permission_id: $scope.permission ,
             });
             if (typeof id == "undefined") {
                 RoleFactory.SaveRole(RoleModel)
                     .then(function (response) {
                         showmesage(response.data.message);
                         processData.ListRole();
-                        $("#myModal").modal("toggle");
                     })
                     .catch(function (response) {
-                        if (response.status === 401) {
-                            alert(response.data);
-                        } else {
-                            $scope.vldName = response.data.name;
-                        }
+                        console.log(response)
                     });
             }
             if (typeof id !== "undefined") {
@@ -113,14 +87,10 @@ app.controller("RoleController", function ($scope, RoleFactory) {
                     .then(function (response) {
                         showmesage(response.data.message);
                         processData.ListRole();
-                        $("#myModal").modal("toggle");
                     })
                     .catch(function (response) {
-                        if (response.status === 401) {
-                            alert(response.data);
-                        } else {
-                            $scope.vldName = response.data.name;
-                        }
+                        console.log(response.data.message);
+                        
                     });
             }
         },
@@ -128,35 +98,26 @@ app.controller("RoleController", function ($scope, RoleFactory) {
 
     const processData = {
         ListRole: function () {
-            RoleFactory.GetRole(
-                $scope.data.filter.page,
-                $scope.data.filter.perPage,
-                $scope.data.filter.freeText
-            )
-                .then(function (response) {
-                    $scope.roles = response.data.roles.data;
-                    console.log(response);
-
-                    var allRole = response.data.roles.total;
-                    var per = response.data.roles.per_page;
-
-                    //buttonPage
-                    var tmpPages = [];
-                    var count = Math.ceil(allRole / per);
-                    for (var i = 1; i <= count; i++) {
-                        tmpPages.push(i);
-                    }
-
-                    $scope.pages = tmpPages;
-                })
-                .catch(function (err) {});
-        },
-
-        ListPermis: function () {
-            RoleFactory.GetPermis().then(function (response) {
-                $scope.permiss = response.data.permiss;
+            RoleFactory.GetRole().then(function (response) {
+                console.log(response);
+                $scope.roles = response.data.roles;
             });
         },
+
+        ListPermis : function () { 
+            RoleFactory.GetPermis().then(function (response) { 
+                console.log(response)
+                $scope.permiss = response.data.permiss
+                // $scope.permObj = new Object
+                // Object.keys($scope.permiss).forEach(jjjjj =>{
+                //     $scope.permObj[$scope.permiss[jjjjj]] = false
+                // })
+                
+                // $scope.aa = function (param) { 
+                //     $scope.permiss[param] =  !$scope.permiss[param]
+                //  }
+             })
+         }
     };
 
     processData.ListRole();

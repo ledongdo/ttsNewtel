@@ -6,8 +6,6 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <title>AdminLTE 3 | Starter</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
   
   <link rel="stylesheet" href="{{url('adminlte/plugins/fontawesome-free/css/all.min.css')}}">
   <link rel="stylesheet" href="{{url('adminlte/dist/css/adminlte.min.css')}}">

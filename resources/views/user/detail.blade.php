@@ -18,7 +18,7 @@
               <div class="form-group">
                 <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" id="email" name="email" placeholder="Vui lòng nhập Email" ng-model="user.email" required />
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Vui lòng nhập Email" ng-model="user.email" required />
                   <span id="helpBlock2" class="help-block" ng-if="vldEmail" ng-repeat="erorr in vldEmail">@{{erorr}}</span>
                 </div>
               </div>
@@ -35,7 +35,7 @@
                 <label for="inputEmail3" class="col-sm-3 control-label">Role</label>
                     <div class="col-sm-9">
                         <select ng-model="role" class="form-control" >
-                            <option ng-repeat="role in roleOption" ng-selected="role.selected" value="@{{role.id}}">@{{role.name}}</option>
+                            <option ng-repeat="role in roleOption"  ng-value="role.id" >@{{role.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -46,6 +46,6 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" id="save" ng-click="action.save(id)">Lưu</button>
           </div>
-        </div>
-      </div>
-    </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->

@@ -27,7 +27,7 @@ class UserCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|max:50',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email:rfc,dns|unique:users',
             'password' => 'required|max:20',
         ];
     }
@@ -37,8 +37,8 @@ class UserCreateRequest extends FormRequest
         return [
             'name.required' => 'Tên không được để trống',
             'name.max' => 'Tên không được quá dài',
-            'email.required' => 'Email không được để trống',
             'email.email' => 'Email không đúng định dạng',
+            'email.required' => 'Email không được để trống',
             'email.unique' => 'Email đã tồn tại',
             'password.required' => 'Password không được để trống',
             'password.max' => 'Password không được quá dài',

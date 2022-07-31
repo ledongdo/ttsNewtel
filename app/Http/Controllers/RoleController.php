@@ -2,37 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RoleRequest;
 use App\Permission;
 use App\Role;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
-    public function Roles(Request $request)
+    public function Roles()
     {
-        $validate = Validator::make($request->all(), [
-            'page' => "required"
-        ], [
-            'page.required' => "Trang không được bỏ trống"
-        ]);
-
-        if ($validate->fails()) {
-            throw new HttpResponseException(response()->json($validate->errors(), 422));
-        }
-
-        $perPage = $request->input('perPage', 10);
-        $freeText = $request->freeText;
-
-        $roles = Role::latest()->filterFreeText($freeText)->paginate($perPage);
-
-        return response()->json([
-            'error' => false,
-            'roles' => $roles,
-
+       $roles = Role::get();
+       return response()->json([
+        'success' => 'success',
+        'roles' => $roles,
         ], 200);
     }
 
@@ -41,32 +23,31 @@ class RoleController extends Controller
     }
     //show
     public function show($id){
-        $roles = Role::find($id)->load('permissions');
+        $roles = Role::find($id);
 		return response()->json([
 			'error' => false,
 			'roles'  => $roles,
 		], 200);
     }
     //createRole
-    public function store(RoleRequest $request)
+    public function store(Request $request)
     {
-        $roles = new Role();
-        $roles->name = $request->name;
-        $roles->save();
-        $roles->permissions()->attach($request->permission_id);
-        return response()->json([
-            'success' => 'sussess',
-            'roles' =>   $roles,
-        ],200);
+        dd($request->all());
+        // $roles = new Role();
+        // $roles->name = $request->name;
+        // $roles->save();
+        // $roles->permissions()->attach($request->permission_id);
+        // return response()->json([
+        //     'success' => 'sussess',
+        //     'roles' =>   $roles,
+        // ],200);
     }
     //updateRole
-    public function update($id,RoleRequest $request)
+    public function update($id,Request $request)
     {
         $roles = Role::find($id);
         $roles->name = $request->name;
         $roles->save();
-        $roles->permissions()->sync($request->permission_id);
-
         return response()->json([
             'success' => 'sussess',
             'roles' =>   $roles,

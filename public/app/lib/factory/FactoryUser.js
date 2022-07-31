@@ -10,7 +10,7 @@ app.factory("UserFactory", [
             };
             if (freeText) queryParams.freeText = freeText;
             if (perPage) queryParams.perPage = perPage;
-            
+
             let url = siteUrl +  "/users/getUser?" + $httpParamSerializer(queryParams);
             return $http.get(url);
         };
@@ -69,13 +69,6 @@ app.factory("UserFactory", [
         //login
         userFactory.Login = function () {
             window.location.replace(siteUrl + "/users/login");
-        };
-
-        userFactory.ListRole = function () {
-            return $http({
-                method: "Get",
-                url: siteUrl + "/users/getRole",
-            });
         };
 
         return userFactory;
